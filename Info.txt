@@ -1,0 +1,14 @@
+# The scripts were written by Tjard Bergmann (2023) and are not licensed.
+# Everyone is free to use or edit them under the rules of creative commons (CC BY).
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+#-----------------------------
+# Reference
+#-----------------------------
+
+#Please cite the following manuscript when using this script:
+#
+#Developmental profile of oligodendrocyte arrangement, identification and morphology 
+#in nuclei of the superior olivary complex  
