@@ -1,0 +1,125 @@
+The scripts were written by Tjard Bergmann (2023) and are not licensed.
+Everyone is free to use or edit them under the rules of creative commons (CC BY).
+
+University of Veterinary Medicine Hannover
+Institute of Zoology, AG Felmy (Neurobiology)
+Website: https://www.tiho-hannover.de/kliniken-institute/institute/institut-fuer-zoologie/arbeitsgruppen/neurobiologie/ag-felmy
+
+-------------------------------------------------------------------------------
+
+-----------------------------
+ Reference
+-----------------------------
+
+Please cite the following manuscript when using the R-Scripts:
+
+Developmental profile of oligodendrocyte arrangement, identification and morphology 
+in nuclei of the superior olivary complex  
+
+-------------------------------------------------------------------------------
+
+-----------------------------
+ Short intro
+-----------------------------
+
+As we live in times of high data output and analysis it is important to have tools
+for reliable and fast data evaluation. We developed highly specific tools for processing
+our SOC Oligodendrocyte data:
+
+1) 1_ZOO_SOC_Oligos_Fig1b_Normalize_Cell_Data.R
+2) 2_ZOO_SOC_Oligos_Fig1b_Average_Density_Grid_XLSX.R
+3) 3_ZOO_SOC_Oligos_Fig3_Plots.R
+
+The first two scripts process the cell position and region data in multiple steps
+resulting in a two-dimensional cell density grid that was displayed in Figure 1b of 
+our manuscript.
+
+The third script processed the cell position and region data in order to get an
+overview for the cell counts per section/age/region, area size (of each region per slice)
+and the density ((cells per slice)/area [mm²]). This information was displayed in figure 3.
+
+-------------------------------------------------------------------------------
+
+-----------------------------
+R script manual
+-----------------------------
+
+In order to run the three R-scripts it is necessary to open them within the RStudio Editor
+(https://posit.co/). The scripts can identify their location on the computer and will install
+and setup all necessary functions automatically.
+
+
+1_ZOO_SOC_Oligos_Fig1b_Normalize_Cell_Data.R
+--------------------------------------------
+
+This script normalizes the cell position data by using the ROI (region of interest) data for each region.
+In a first step the cell position data (which is different from slice to slice) is normalized by defining the
+lower left position of the ROI as 0 and the upper right position as the maximum distance. In a second step the
+position data is converted in percentage values from 0 % (lower left position) to 100 % (upper right position).
+Cell positions outside of the ROI are discarded as false position data. Accepted and discarded cell data (for all
+regions, age groups and slices) are saved separately as xlsx files in the "fig1b_output" folder.
+
+Run the script
+--------------
+
+In order to run the script it is necessary to open it with RStudio. The script is dependent on the input data
+stored in the folder "fig1b_input". The file "Combined_ImageJ-data.csv" includes all cell position data, while the
+file "ROI-data.csv" holds the region border data. It is important to not change the name of the files or change the
+location. The R-Script based on its current location will search within the folder "fig1b_input" for the files.
+To process the data press "Ctrl+A" (marks the complete R script) within the script and then execute the script by 
+pressing "Ctrl+Enter". The R script will process the data, create a new output folder "fig1b_output" and store the 
+resulting tables (1_Density_Plot_Normalized_data_pixel.xlsx, 1_Density_Plot_Discarded_data_pixel.xlsx) inside it.
+
+
+2_ZOO_SOC_Oligos_Fig1b_Average_Density_Grid_XLSX.R
+--------------------------------------------------
+
+The second script will in multiple steps process the normalized position data (created within the first script).
+In a first step the position data (X/Y_Percentage) of each cell is binned in 5 % steps. Creating a grid of 21
+fields in x and y direction (21*21). We get 21 fields because a field is defined as "i=5; min <= i-5 and max < i"
+which means a 21 field ranging from "100" to "<105" Percent (here only 100 Percent is relevant) is created.
+The binned data is stored within the subfolder "fig1b_output\1_binned_data".
+In a second step the binned data is further processed into averaged data. In this step all slice data belonging to the same
+region and age group are clustered and the average sum (cells per binned field / number of slices) and
+average ndensity ((cells per binned field/max cells per binned field)/ number of slices) is calculated.
+The averaged data is stored within the subfolder "fig1b_output\2_averaged_data".
+In a third step the averaged ndensity data created in the last step is extracted and plotted in a two-dimensional
+control grid. The plots are saved in the subfolder "fig1b_output\3_average_plot".
+Finally the averaged ndensity data is also saved as a 21*21 xlsx table and stored in the subfolder "fig1b_output\4_xlsx_grid".
+Before using the data in our manuscript as figure 1b the ndensity data was further normalized into values between 0 and 1
+(ndensity value [of age/region cluster]/max ndensity [of age/region cluster]). The last step was done manually and
+the result was converted into our final figure using the software "IgorPro" (https://www.wavemetrics.com/products/igorpro).
+
+Run the script
+--------------
+
+In order to run the script it is necessary to open it with RStudio.
+The second script is a continuation of the first script and can only be executed after execution of the first
+script. The first script will create important variables, such as the dataframe "DistancePlot.Table" which will
+be used within the second script.
+To process the data press "Ctrl+A" (marks the complete R script) within the script and then execute the script by 
+pressing "Ctrl+Enter". It will create output data for every step:
+
+1_binned_data    -> Normalised cell position data is converted in 5 % bins
+2_averaged_data  -> The binned data is converted in age/region clustered averaged cell position data (ndensity)
+3_average_plot   -> The averaged ndensity data is plotted for each specified region and age group
+4_xlsx_grid      -> The plotted averaged ndensity data is saved as two dimensional 21*21 grid
+
+
+3_ZOO_SOC_Oligos_Fig3_Plots.R
+-----------------------------
+
+This script summarizes for each region and age group the number of cells per slice, region size, cell density.
+It creates a single overview file dividing the data in region specific data sheets. It also creates an overview
+plot of all three categories similar to the one used in figure 3.
+
+Run the script
+--------------
+
+In order to run the script it is necessary to open it with RStudio. The script is dependent on the input data
+stored in the folder "fig1b_input". The file "Combined_ImageJ-data.csv" includes all cell position data, while the
+file "ROI-data.csv" holds the region border data. It is important to not change the name of the files or change the
+location. The R-Script based on its current location will search within the folder "fig3_input" for the files.
+To process the data press "Ctrl+A" (marks the complete R script) within the script and then execute the script by 
+pressing "Ctrl+Enter". The R script will process the data, create a new output folder "fig3_output" and store the 
+resulting tables (Fig3_Raw_data.xlsx, Fig3_Overview.pdf) inside it.
