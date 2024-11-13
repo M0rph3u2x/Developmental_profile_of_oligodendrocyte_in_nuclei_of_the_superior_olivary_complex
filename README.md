@@ -1,4 +1,5 @@
-# Developmental_profile_of_oligodendrocyte_in_nuclei_of_the_superior_olivary_complex
+# Oligodendrocyte arrangement, identification and morphology in the developing superior olivary complex
+
 R scripts for processing SOC cell data
 
 The scripts were written by Tjard Bergmann (2023) and are not licensed.
