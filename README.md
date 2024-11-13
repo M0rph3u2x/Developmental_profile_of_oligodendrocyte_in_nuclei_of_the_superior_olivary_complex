@@ -10,5 +10,5 @@ Website: https://www.tiho-hannover.de/kliniken-institute/institute/institut-fuer
 
 Please cite the following manuscript when using this script:
 
-Developmental profile of oligodendrocyte arrangement, identification and morphology 
-in nuclei of the superior olivary complex
+Oligodendrocyte arrangement, identification and morphology in the developing superior olivary complex 
+
